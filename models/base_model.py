@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 import uuid
-from models.engine.file_storage import storage
+from models import storage
 from datetime import datetime
 
 
 class BaseModel:
     """Base class"""
-    def __init__(self, *arg, **kwargs):
+    def __init__(self, *args, **kwargs):
         """initialization"""
         if kwargs:
             for k, v in kwargs.items():
