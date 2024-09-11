@@ -5,8 +5,8 @@ import os
 
 class FileStorage:
     """store in json"""
-    self__file_path = 'file.json'
-    self__objects ={}
+    __file_path = 'file.json'
+    __objects ={}
 
     def all(self):
         """return dic"""
@@ -18,7 +18,7 @@ class FileStorage:
 
     def save(self):
         """save to json file"""
-        with open(__file_path, 'w') as f:
+        with open(self.__file_path, 'w') as f:
             obj = {}
             for k, v in self.__objects.items():
                 obj[k] = v.to_dict()
