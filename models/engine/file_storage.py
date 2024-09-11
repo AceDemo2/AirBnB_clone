@@ -25,6 +25,20 @@ class FileStorage:
             json.dump(obj, f)
 
     def reload(self):
+        """de-serialize persisted objects"""
+        try:
+            deserialized = {}
+            with open(FileStorage.__file_path, "r") as f:
+                deserialized = json.loads(f.read())
+            FileStorage.__objects = {
+                key:
+                    eval(obj["__class__"])(**obj)
+                    for key, obj in deserialized.items()}
+        except (FileNotFoundError, JSONDecodeError):
+            # No need for error
+            pass
+
+    """def reload(self):
         """read from json"""
         if os.path.exists(self.__file_path):
             obj = {}
