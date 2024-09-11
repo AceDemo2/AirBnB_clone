@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import uuid
+from models.engine.file_storage import storage
 from datetime import datetime
 
 
@@ -16,8 +17,8 @@ class BaseModel:
         else:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-        if 'id' not in kwargs:
             self.id = str(uuid.uuid4())
+            storage.new(self)
 
     def __str__(self):
         """str"""
@@ -26,6 +27,7 @@ class BaseModel:
     def save(self):
         """save obj"""
         self.updated_at = datetime.now()
+        storage.save()
     
     def to_dict(self):
         """returns dict"""
