@@ -1,16 +1,16 @@
-#!/usr/bin/bash
+#!/usr/bin/python3
 import json
 import os
 
 
 class FileStorage:
     """store in json"""
-    __file_path = 'file.json'
-    __objects ={}
+    self__file_path = 'file.json'
+    self__objects ={}
 
     def all(self):
         """return dic"""
-        return __objects
+        return self.__objects
 
     def new(self, obj):
         """set obj"""
@@ -20,14 +20,14 @@ class FileStorage:
         """save to json file"""
         with open(__file_path, 'w') as f:
             obj = {}
-            for k, v in __objects.items():
+            for k, v in self.__objects.items():
                 obj[k] = v.to_dict()
             json.dump(obj, f)
 
     def reload(self):
         """read from json"""
-        if os.path.exists(__file_path):
-            with open(__file_path, 'r') as f:
+        if os.path.exists(self.__file_path):
+            with open(self.__file_path, 'r') as f:
                 obj = json.load(f)
             for k, v in obj.items():
                 clsn = v['__class__']
