@@ -28,7 +28,12 @@ class FileStorage:
         """read from json"""
         if os.path.exists(self.__file_path):
             with open(self.__file_path, 'r') as f:
-                obj = json.load(f)
+                obj_dict = json.load(f)
+                obj_dict = {k: self.classes()[v["__class__"]](**v)
+                            for k, v in obj_dict.items()}
+            # TODO: should this overwrite or insert?
+                FileStorage.__objects = obj_dict
+                """obj = json.load(f)
                 for k, v in obj.items():
                     clsn = v['__class__']
-                    self.__objects[k] = globals()[clsn](**v)
+                    self.__objects[k] = globals()[clsn](**v)"""
