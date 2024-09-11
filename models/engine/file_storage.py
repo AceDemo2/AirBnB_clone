@@ -28,7 +28,6 @@ class FileStorage:
         """read from json"""
         if os.path.exists(self.__file_path):
             with open(self.__file_path, 'r') as f:
-                FileStorage.__objects = obj_dict
                 obj = json.load(f)
                 for k, v in obj.items():
                     clsn = v['__class__']
