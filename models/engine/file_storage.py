@@ -39,11 +39,11 @@ class FileStorage:
             pass
 
     """def reload(self):
-        """read from json"""
+        read from json
         if os.path.exists(self.__file_path):
             obj = {}
             with open(self.__file_path, 'r') as f:
                 obj = json.load(f)
                 for k, v in obj.items():
                     clsn = v['__class__']
-                    FileStorage.__objects[k] = globals()[clsn](**v)
+                    FileStorage.__objects[k] = globals()[clsn](**v)"""
