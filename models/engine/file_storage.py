@@ -45,6 +45,6 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 obj = json.load(f)
             for k, v in obj.items():
-                clsn = v['__class__']
+                #clsn = v['__class__']
                 # cls = global().get(clsn)
-                self.__objects[k] = self.classes[clsn](**v)
+                self.__objects[k] = eval([v['__class__'])(**v)
