@@ -24,8 +24,8 @@ class FileStorage:
                 obj[k] = v.to_dict()
             json.dump(obj, f)
 
-    def reload(self):
-        """de-serialize persisted objects"""
+    """def reload(self):
+       ""de-serialize persisted objects""
         try:
             deserialized = {}
             with open(self.__file_path, "r") as f:
@@ -36,14 +36,14 @@ class FileStorage:
                     for key, obj in deserialized.items()}
         except (FileNotFoundError, JSONDecodeError):
             # No need for error
-            pass
+            pass"""
 
-    """def reload(self):
-        read from json
+    def reload(self):
+        """read from json"""
         if os.path.exists(self.__file_path):
             obj = {}
             with open(self.__file_path, 'r') as f:
                 obj = json.load(f)
-                for k, v in obj.items():
-                    clsn = v['__class__']
-                    FileStorage.__objects[k] = globals()[clsn](**v)"""
+            for k, v in obj.items():
+                clsn = v['__class__']
+                FileStorage.__objects[k] = globals()[clsn](**v)
