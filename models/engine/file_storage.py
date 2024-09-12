@@ -46,9 +46,5 @@ class FileStorage:
                 obj = json.load(f)
             for k, v in obj.items():
                 clsn = v['__class__']
-                if clsn == 'BaseModel':
-                    cls = BaseModel
-                else:
-                    cls = classes().get(clsn)
-                if cls:
-                    FileStorage.__objects[k] = cls(**v)
+                cls = classes().get(clsn)
+                FileStorage.__objects[k] = cls(**v)
