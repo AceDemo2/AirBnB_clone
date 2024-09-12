@@ -8,13 +8,6 @@ class FileStorage:
     __file_path = 'file.json'
     __objects ={}
 
-    def classes(self):
-        """Returns a dictionary of class names to class objects"""
-        return {
-            'BaseModel': BaseModel,
-            # Add other classes as needed, e.g., 'User': User
-        }
-    
     def all(self):
         """return dic"""
         return self.__objects
@@ -53,4 +46,4 @@ class FileStorage:
                 obj = json.load(f)
             for k, v in obj.items():
                 clsn = v['__class__']
-                FileStorage.__objects[k] = self.classes()[clsn](**v)
+                FileStorage.__objects[k] = eval(clsn)(**v)
