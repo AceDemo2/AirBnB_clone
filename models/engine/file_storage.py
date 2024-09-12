@@ -46,4 +46,9 @@ class FileStorage:
                 obj = json.load(f)
             for k, v in obj.items():
                 clsn = v['__class__']
-                FileStorage.__objects[k] = globals()[clsn](**v)
+                if clsn == 'BaseModel':
+                    cls = BaseModel
+                else:
+                    cls = globals().get(clsn)
+                if cls:
+                    FileStorage.__objects[k] = cls(**v)
