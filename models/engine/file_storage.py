@@ -46,5 +46,5 @@ class FileStorage:
                 obj = json.load(f)
             for k, v in obj.items():
                 clsn = v['__class__']
-                cls = classes().get(clsn)
-                FileStorage.__objects[k] = cls(**v)
+                # cls = w.get(clsn)
+                FileStorage.__objects[k] = eval(clsn)(**v)
