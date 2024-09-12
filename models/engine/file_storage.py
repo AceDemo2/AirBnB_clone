@@ -3,6 +3,10 @@ import json
 import os
 
 
+class_registry = {
+    'BaseModel': BaseModel,
+    # Add other classes if needed
+}
 class FileStorage:
     """store in json"""
     __file_path = 'file.json'
