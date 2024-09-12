@@ -49,6 +49,6 @@ class FileStorage:
                 if clsn == 'BaseModel':
                     cls = BaseModel
                 else:
-                    cls = globals().get(clsn)
+                    cls = classes().get(clsn)
                 if cls:
                     FileStorage.__objects[k] = cls(**v)
