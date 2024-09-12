@@ -28,9 +28,9 @@ class FileStorage:
         """de-serialize persisted objects"""
         try:
             deserialized = {}
-            with open(FileStorage.__file_path, "r") as f:
+            with open(self.__file_path, "r") as f:
                 deserialized = json.loads(f.read())
-            FileStorage.__objects = {
+            self.__objects = {
                 key:
                     eval(obj["__class__"])(**obj)
                     for key, obj in deserialized.items()}
