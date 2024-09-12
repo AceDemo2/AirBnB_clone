@@ -3,10 +3,6 @@ import json
 import os
 
 
-class_registry = {
-    'BaseModel': BaseModel,
-    # Add other classes if needed
-}
 class FileStorage:
     """store in json"""
     __file_path = 'file.json'
@@ -50,4 +46,4 @@ class FileStorage:
                 obj = json.load(f)
             for k, v in obj.items():
                 clsn = v['__class__']
-                FileStorage.__objects[k] = globals()[clsn](**v)
+                FileStorage.__objects[k] = self.classes()[clsn](**v)
