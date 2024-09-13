@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """console"""
 import cmd
-from models.base_model import BaseModel
 from models import storage
 
 
@@ -30,10 +29,10 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print('** class name missing **')
             return
-        if arg not in self.classes:
+        if arg not in storage.classes():
             print("** class doesn't exist **")
             return
-        new = self.classes[arg]()
+        new = storage.classes()[arg]()
         new.save()
         print(new.id)
 
@@ -43,7 +42,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print('** class name missing **')
             return
-        if args[0] not in self.classes:
+        if args[0] not in storage.classes():
             print("** class doesn't exist **")
             return
         if len(args) == 1:
@@ -62,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print('** class name missing **')
             return
-        if args[0] not in self.classes:
+        if args[0] not in storage.classes():
             print("** class doesn't exist **")
             return
         if len(args) == 1:
@@ -85,7 +84,7 @@ class HBNBCommand(cmd.Cmd):
                 obj.append(str(v))
         else:
             
-            if arg not in self.classes:
+            if arg not in storage.classes():
                 print("** class doesn't exist **")
                 return
             else:
@@ -100,7 +99,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print('** class name missing **')
             return
-        if args[0] not in self.classes:
+        if args[0] not in storage.classes():
             print("** class doesn't exist **")
             return
         if len(args) < 2:
