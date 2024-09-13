@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """console"""
 import cmd
+from models.base_model import BaseModel
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -28,10 +30,10 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print('** class name missing **')
             return
-        if arg not in globals():
+        if arg not in self.classes:
             print("** class doesn't exist **")
             return
-        new = globals()[arg]()
+        new = self.classes[arg]()
         new.save()
         print(new.id)
 
@@ -41,7 +43,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print('** class name missing **')
             return
-        if args[0] not in globals():
+        if args[0] not in self.classes:
             print("** class doesn't exist **")
             return
         if len(args) == 1:
@@ -56,6 +58,73 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """destroy instances"""
-        
+        args = arg.split()
+        if not args:
+            print('** class name missing **')
+            return
+        if args[0] not in self.classes:
+            print("** class doesn't exist **")
+            return
+        if len(args) == 1:
+            print('** instance id missing **')
+            return
+        allins = storage.all()
+        key = f'{args[0]}.{args[1]}'
+        if key not in allins:
+            print('** no instance found **')
+        else:
+            del allins[key]
+            storage.save()
+
+    def do_all(self, arg):
+        """print instances"""
+        allins = storage.all()
+        obj = []
+        if not arg:
+            for v in allins.values():
+                obj.append(str(v))
+        else:
+            
+            if arg not in self.classes:
+                print("** class doesn't exist **")
+                return
+            else:
+                for k, v in allins.items():
+                    if arg == k.split('.')[0]:
+                        obj.append(str(v))
+        print(obj)
+    
+    def do_update(self, arg):
+        """updates an instance"""
+        args = arg.split()
+        if not args:
+            print('** class name missing **')
+            return
+        if args[0] not in self.classes:
+            print("** class doesn't exist **")
+            return
+        if len(args) < 2:
+            print('** instance id missing **')
+            return
+        allins = storage.all()
+        key = f'{args[0]}.{args[1]}'
+        if key not in allins:
+            print('** no instance found **')
+            return
+        if len(args) < 3:
+            print('** attribute name missing **')
+            return
+        if len(args) < 4:
+            print('** value missing **')
+            return
+        ins = allins[key]
+        name = args[2]
+        value = args[3].strip('"')
+        if hasattr(ins, name):
+            ty = type(getattr(ins, name))
+            value = ty(value)
+        setattr(ins, name, value)
+        ins.save()
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
