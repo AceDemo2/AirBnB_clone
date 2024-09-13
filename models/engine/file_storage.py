@@ -27,11 +27,11 @@ class FileStorage:
         """return classes"""
         from models.base_model import BaseModel
         from models.user import User
-        from models.user import State
-        from models.user import City
-        from models.user import Amenity
-        from models.user import Place
-        from models.user import Review
+        from models.state import State
+        from models.city import City
+        from models.Amenity import Amenity
+        from models.place import Place
+        from models.review import Review
         classes = {"BaseModel": BaseModel,
                    "User": User,
                    "State": State,
