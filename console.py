@@ -108,12 +108,17 @@ class HBNBCommand(cmd.Cmd):
         """unrecognized commands"""
         args = arg.split('.')
         if len(args) == 2:
-            funcs = {'all()': self.do_all,
-                    'count()': self.do_count}
-            func = args[1]
-            if func in funcs:
+            funcs = {'all': self.do_all,
+                    'count': self.do_count,
+                    'show': self.do_show}
+            func = args[1].strip('()')
+            if 'show' in func:
+                sfunc = func.split('"')
+                name = f'{args[0]} {sfunc[1] if sfunc[1] else ''}'
+                func = sfunc[0]
+            elif func in funcs:
                 name = args[0]
-                funcs[func](name)
+            funcs[func](name)
 
     def do_update(self, arg):
         """updates an instance"""
