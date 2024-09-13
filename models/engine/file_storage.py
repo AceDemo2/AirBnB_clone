@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import json
 import os
-from model.user import User
+from models.user import User
 
 class FileStorage:
     """store in json"""
