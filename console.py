@@ -91,6 +91,13 @@ class HBNBCommand(cmd.Cmd):
                     if arg == k.split('.')[0]:
                         obj.append(str(v))
         print(obj)
+
+    def default(self, arg):
+        """unrecognized commands"""
+        args = arg.split('.')
+        if args[1] == 'all()':
+            name = args[0]
+            self.do_all(name)
     
     def do_update(self, arg):
         """updates an instance"""
