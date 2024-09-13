@@ -38,4 +38,4 @@ class FileStorage:
             for k, v in obj.items():
                 clsn = v['__class__']
                 # cls = global().get(clsn)
-                self.__objects[k] = self.classes()[v](**v)
+                self.__objects[k] = self.classes()[clsn](**v)
