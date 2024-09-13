@@ -113,7 +113,7 @@ class HBNBCommand(cmd.Cmd):
             func = args[1]
             if func in funcs:
                 name = args[0]
-                funcs[name](name)
+                funcs[func](name)
 
     def do_update(self, arg):
         """updates an instance"""
