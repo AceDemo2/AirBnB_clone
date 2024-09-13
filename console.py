@@ -92,13 +92,29 @@ class HBNBCommand(cmd.Cmd):
                         obj.append(str(v))
         print(obj)
 
+    def do_count(self, arg):
+        """count instances"""
+        if arg not in storage.classes():
+            print("** class doesn't exist **")
+            return
+        allins = storage.all()
+        count = 0
+        for k in allins:
+            if arg == k.split('.')[0]:
+                count += 1
+        print(count)
+
     def default(self, arg):
         """unrecognized commands"""
         args = arg.split('.')
-        if args[1] == 'all()':
-            name = args[0]
-            self.do_all(name)
-    
+        if len(args) == 2:
+            funcs = {'all()': self.do_all,
+                    'count()': self.do_count}
+            func = args[1]
+            if func in funcs:
+                name = args[0]
+                funcs[name](name)
+
     def do_update(self, arg):
         """updates an instance"""
         args = arg.split()
