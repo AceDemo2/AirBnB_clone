@@ -28,7 +28,12 @@ class FileStorage:
         from models.base_model import BaseModel
         from models.user import User
         classes = {"BaseModel": BaseModel,
-                   "User": User}
+                   "User": User,
+                   "State": State,
+                   "City": City,
+                   "Amenity": Amenity,
+                   "Place": Place,
+                   "Review": Review}
         return classes
     
     def reload(self):
