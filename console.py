@@ -115,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
             if 'show' in func:
                 sfunc = func.split('"')
                 name = f'{args[0]} {sfunc[1]}' if len(sfunc) > 1 and sfunc[1] else f'{args[0]}'
-                func = sfunc[0]
+                func = 'show'
             elif func in funcs:
                 name = args[0]
             funcs[func](name)
