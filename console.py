@@ -2,7 +2,6 @@
 """console"""
 import cmd
 from models import storage
-from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
     """command interpreter"""
@@ -25,7 +24,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """create"""
+        """create instance"""
         if not arg:
             print('** class name missing **')
             return
