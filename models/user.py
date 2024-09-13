@@ -2,7 +2,7 @@
 """user"""
 from models.base_model import BaseModel
 
-class User(BaseMode):
+class User(BaseModel):
     """User class"""
     email = ''
     password= ''
