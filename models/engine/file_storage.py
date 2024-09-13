@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 import json
 import os
-from models.user import User
 
 class FileStorage:
     """store in json"""
@@ -28,7 +27,7 @@ class FileStorage:
         """return classes"""
         from models.base_model import BaseModel
         classes = {"BaseModel": BaseModel,
-                    "User": User}
+                   "User": User}
         return classes
     
     def reload(self):
