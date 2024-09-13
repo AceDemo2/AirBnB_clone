@@ -26,8 +26,7 @@ class FileStorage:
     def classes(self):
         """return classes"""
         from models.base_model import BaseModel
-        classes = {"BaseModel": BaseModel,
-                   "User": User}
+        classes = {"BaseModel": BaseModel}
         return classes
     
     def reload(self):
