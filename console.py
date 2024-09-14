@@ -122,12 +122,16 @@ class HBNBCommand(cmd.Cmd):
                     avalue = sfunc[2].strip().strip('"')
                     name = f'{args[0]} {oid} {aname} {avalue}'
                     func = 'update'
+                else:
+                    return
             elif 'show' in func or 'destroy' in func:
                 sfunc = func.split('"')
                 name = f'{args[0]} {sfunc[1]}' if len(sfunc) > 1 and sfunc[1] else f'{args[0]}'
                 func = sfunc[0]
             elif func in funcs:
                 name = args[0]
+            else:
+                return
             funcs[func](name)
 
     def do_update(self, arg):
