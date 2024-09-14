@@ -161,10 +161,10 @@ class HBNBCommand(cmd.Cmd):
         name = args[2]
         value = args[3].strip('"')
         try:
-            int(value)
+            value = int(value)
         except ValueError:
             try:
-                float(value)
+                value = float(value)
             except ValueError:
                 pass
         setattr(ins, name, value)
