@@ -119,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
                 if len(sfunc) == 3:
                     oid = sfunc[0].strip().strip('"')
                     aname = sfunc[1].strip().strip('"')
-                    avalue = sfunc[2].stript().strip('"')
+                    avalue = sfunc[2].strip().strip('"')
                     name = f'{args[0]} {oid} {aname} {avalue}'
             elif 'show' in func or 'destroy' in func:
                 sfunc = func.split('"')
