@@ -115,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
                     'update': self.do_update}
             func = args[1].replace("(", "").replace(")", "")
             if 'update' in func:
-                sfunc = func.split(',')
+                sfunc = func.split(',', 2)
                 if len(sfunc) == 3:
                     oid = sfunc[0].strip().strip('"')
                     aname = sfunc[1].strip().strip('"')
