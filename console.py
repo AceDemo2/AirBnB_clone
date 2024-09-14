@@ -160,14 +160,19 @@ class HBNBCommand(cmd.Cmd):
         ins = allins[key]
         name = args[2]
         value = args[3].strip('"')
-        try:
-            if hasattr(ins, name):
-                ty = type(getattr(ins, name))
-                value = ty(value)
-            setattr(ins, name, value)
-            ins.save()
-        except Exception as e:
-            print(f"Failed to update: {e}")
+        if hasattr(ins, name):
+            ty = type(getattr(ins, name))
+            value = ty(value)
+        else:
+            try:
+                int(value)
+            except ValueError:
+                try:
+                    float(value)
+                except ValueError:
+                    pass
+        setattr(ins, name, value)
+        ins.save()
 
 
 if __name__ == '__main__':
