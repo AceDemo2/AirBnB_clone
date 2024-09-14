@@ -160,17 +160,13 @@ class HBNBCommand(cmd.Cmd):
         ins = allins[key]
         name = args[2]
         value = args[3].strip('"')
-        if hasattr(ins, name):
-            ty = type(getattr(ins, name))
-            value = ty(value)
-        else:
+        try:
+            int(value)
+        except ValueError:
             try:
-                int(value)
+                float(value)
             except ValueError:
-                try:
-                    float(value)
-                except ValueError:
-                    pass
+                pass
         setattr(ins, name, value)
         ins.save()
 
