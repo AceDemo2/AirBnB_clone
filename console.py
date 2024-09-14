@@ -167,7 +167,7 @@ class HBNBCommand(cmd.Cmd):
             setattr(ins, name, value)
             ins.save()
         except Exception as e:
-        print(f"Failed to update: {e}")
+            print(f"Failed to update: {e}")
 
 
 if __name__ == '__main__':
