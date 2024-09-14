@@ -111,9 +111,17 @@ class HBNBCommand(cmd.Cmd):
             funcs = {'all': self.do_all,
                     'count': self.do_count,
                     'show': self.do_show,
-                    'destroy': self.do_destroy}
+                    'destroy': self.do_destroy,
+                    'update': self.do_update}
             func = args[1].replace("(", "").replace(")", "")
-            if 'show' in func or 'destroy' in func:
+            if 'update' in func:
+                sfunc = func.split(',')
+                if len(sfunc) == 3:
+                    oid = sfunc[0].strip().strip('"')
+                    aname = sfunc[1].strip().strip('"')
+                    avalue = sfunc[2].stript().strip('"')
+                    name = f'{args[0]} {oid} {aname} {avalue}'
+            elif 'show' in func or 'destroy' in func:
                 sfunc = func.split('"')
                 name = f'{args[0]} {sfunc[1]}' if len(sfunc) > 1 and sfunc[1] else f'{args[0]}'
                 func = sfunc[0]
