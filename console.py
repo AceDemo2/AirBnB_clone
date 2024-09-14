@@ -163,8 +163,6 @@ class HBNBCommand(cmd.Cmd):
         if hasattr(ins, name):
             ty = type(getattr(ins, name))
             value = ty(value)
-        else:
-            return
         setattr(ins, name, value)
         ins.save()
 
