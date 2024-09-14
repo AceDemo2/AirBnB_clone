@@ -110,12 +110,13 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 2:
             funcs = {'all': self.do_all,
                     'count': self.do_count,
-                    'show': self.do_show}
+                    'show': self.do_show,
+                    'destroy': self.do_destroy}
             func = args[1].strip('()')
-            if 'show' in func:
+            if 'show' in func or 'destroy' in func:
                 sfunc = func.split('"')
                 name = f'{args[0]} {sfunc[1]}' if len(sfunc) > 1 and sfunc[1] else f'{args[0]}'
-                func = 'show'
+                func = sfunc[0]
             elif func in funcs:
                 name = args[0]
             funcs[func](name)
