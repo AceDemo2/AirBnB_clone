@@ -112,7 +112,7 @@ class HBNBCommand(cmd.Cmd):
                     'count': self.do_count,
                     'show': self.do_show,
                     'destroy': self.do_destroy}
-            func = args[1].strip('()')
+            func = args[1].strip('(').strip(')')
             if 'show' in func or 'destroy' in func:
                 sfunc = func.split('"')
                 name = f'{args[0]} {sfunc[1]}' if len(sfunc) > 1 and sfunc[1] else f'{args[0]}'
