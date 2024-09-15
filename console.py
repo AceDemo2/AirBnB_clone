@@ -2,6 +2,7 @@
 """console"""
 import cmd
 from models import storage
+import json
 
 class HBNBCommand(cmd.Cmd):
     """command interpreter"""
@@ -115,21 +116,29 @@ class HBNBCommand(cmd.Cmd):
                     'update': self.do_update}
             func = args[1].replace("(", "").replace(")", "")
             if 'update' in func or 'show' in func or 'destroy' in func:
+                dic = False
                 if 'update' in func:
-                    sfunc = func.replace(',', '').split('"', 1)
+                    if '{' in func:
+                        sfunc = func.split('"', 1)
+                        sfunc[1] = sfunc[1].replace('",', '')
+                        dic = True
+                    else:
+                        sfunc = func.replace(',', '').split('"', 1)
+                        
                 else:
                     sfunc = func.split('"', 1)
-                if len(sfunc) > 1:
+                if len(sfunc) > 1 and '{' not in func:
                     sfunc[1] = sfunc[1].replace('"', '')
+                if len(sfunc) > 1:    
                     name = f'{args[0]} {sfunc[1]}'
                 else:
                     name = f'{args[0]}'
                 func = sfunc[0]
             else:
                 return
-            funcs[func](name)
+            funcs[func](name) if not dic else funcs[func](name, dic) 
 
-    def do_update(self, arg):
+    def do_update(self, arg, dic=False):
         """updates an instance"""
         args = arg.split()
         if not args:
@@ -146,15 +155,26 @@ class HBNBCommand(cmd.Cmd):
         if key not in allins:
             print('** no instance found **')
             return
-        if len(args) < 3:
-            print('** attribute name missing **')
-            return
-        if len(args) < 4:
-            print('** value missing **')
-            return
         ins = allins[key]
-        name = args[2]
-        value = args[3].strip('"')
+        if not dic:
+            if len(args) < 3 and not dic:
+                print('** attribute name missing **')
+                return
+            if len(args) < 4 and not dic:
+                print('** value missing **')
+                return
+            name = args[2]
+            value = args[3].strip('"')
+            self.assign_attr(ins, name, value)
+        elif dic:
+            dic_attr = json.loads(dic)
+            if not isinstance(dic_attr, dict):
+                return
+            for name, value in dic_attr.items():
+                self.assign_attr(ins, name, value)
+        ins.save()
+
+    def assign_attr(ins, name, value):
         if hasattr(ins, name):
             ty = type(getattr(ins, name))
             value = ty(value)
@@ -167,7 +187,6 @@ class HBNBCommand(cmd.Cmd):
                 except ValueError:
                     pass
         setattr(ins, name, value)
-        ins.save()
 
 
 if __name__ == '__main__':
