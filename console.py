@@ -116,8 +116,9 @@ class HBNBCommand(cmd.Cmd):
             func = args[1].replace("(", "").replace(")", "")
             if 'update' in func or 'show' in func or 'destroy' in func:
                 if 'update' in func:
-                    sfunc = func.replace(',', '')
-                sfunc = func.split('"', 1)
+                    sfunc = func.replace(',', '').split('"', 1)
+                else:
+                    sfunc = func.split('"', 1)
                 if len(sfunc) > 1:
                     sfunc[1] = sfunc[1].replace('"', '')
                     name = f'{args[0]} {sfunc[1]}'
