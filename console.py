@@ -125,8 +125,6 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     name = f'{args[0]}'
                 func = sfunc[0]
-            elif func in funcs:
-                name = args[0]
             else:
                 return
             funcs[func](name)
