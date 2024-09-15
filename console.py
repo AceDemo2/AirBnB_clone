@@ -143,14 +143,14 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg, dic=False):
         """updates an instance"""
-        args = arg.split()
+        args = arg.split() if not dic else arg.split(' ', 2)
         if not args:
             print('** class name missing **')
             return
         if args[0] not in storage.classes():
             print("** class doesn't exist **")
             return
-        if len(args) < 2:
+        if len(args) < 2 or (dic and len(args) < 3):
             print('** instance id missing **')
             return
         allins = storage.all()
