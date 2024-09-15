@@ -33,8 +33,8 @@ class TestBaseModel(unittest.TestCase):
     def test_dic(self):
         """check dictionary"""
         dic = self.ins.to_dict()
-        self.assertEqual(dic['updated_at'], self.ins.datetime.isoformat())
-        self.assertEqual(dic['created_at'], self.ins.datetime.isoformat())
+        self.assertEqual(dic['updated_at'], self.ins.updated_at.isoformat())
+        self.assertEqual(dic['created_at'], self.ins.created_at.isoformat())
         self.assertEqual(dic['id'], self.ins.id)
         self.assertEqual(dic['__class__'], self.ins.__name__)
     
@@ -43,6 +43,9 @@ class TestBaseModel(unittest.TestCase):
         strout = str(self.ins) 
         expected = f"[BaseModel] ({self.model.id}) {self.model.__dict__}"
         self.assertEqual(strout, expected) 
+
+    def test_all(self):
+        """check all method"""
 
 if __name__ == "__main__":
     unittest.main()
