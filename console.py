@@ -167,7 +167,7 @@ class HBNBCommand(cmd.Cmd):
             value = args[3].strip('"')
             self.assign_attr(ins, name, value)
         elif dic:
-            dic_attr = json.loads(dic)
+            dic_attr = json.loads(arg[2])
             if not isinstance(dic_attr, dict):
                 return
             for name, value in dic_attr.items():
