@@ -114,25 +114,21 @@ class HBNBCommand(cmd.Cmd):
                     'destroy': self.do_destroy,
                     'update': self.do_update}
             func = args[1].replace("(", "").replace(")", "")
-            if 'update' in func:
+            """if 'update' in func:
                 sfunc = func.replace(',', '').split('"', 1)
                 if len(sfunc) > 1:
                     sfunc[1] = sfunc[1].replace('"', '')
                 name = f'{args[0]} {sfunc[1]}'
-                func = sfunc[0]
-                """sfunc = func.split(',', 2)
-                if len(sfunc) == 3:
-                    funcid = sfunc[0].split('"')
-                    oid = funcid[0].strip()
-                    aname = sfunc[1].strip().strip('"')
-                    avalue = sfunc[2].strip().strip('"')
-                    name = f'{args[0]} {oid} {aname} {avalue}'
-                    func = 'update'
+                func = sfunc[0]"""
+            if 'show' in func or 'destroy' or 'update' in func:
+                if 'update' in func:
+                    sfunc = func.replace(',', '')
+                sfunc = func.split('"', 1)
+                if len(sfunc) > 1:
+                    sfunc[1] = sfunc[1].replace('"', '')
+                    name = f'{args[0]} {sfunc[1]}'
                 else:
-                    return"""
-            elif 'show' in func or 'destroy' in func:
-                sfunc = func.split('"')
-                name = f'{args[0]} {sfunc[1]}' if len(sfunc) > 1 and sfunc[1] else f'{args[0]}'
+                    name = f'{args[0]}'
                 func = sfunc[0]
             elif func in funcs:
                 name = args[0]
