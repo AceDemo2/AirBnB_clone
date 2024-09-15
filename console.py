@@ -117,7 +117,8 @@ class HBNBCommand(cmd.Cmd):
             if 'update' in func:
                 sfunc = func.split(',', 2)
                 if len(sfunc) == 3:
-                    oid = sfunc[0].strip().strip('"')
+                    funcid = sfunc[0].split.('"')
+                    oid = funcid[0].strip()
                     aname = sfunc[1].strip().strip('"')
                     avalue = sfunc[2].strip().strip('"')
                     name = f'{args[0]} {oid} {aname} {avalue}'
