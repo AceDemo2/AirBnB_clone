@@ -177,7 +177,7 @@ class HBNBCommand(cmd.Cmd):
                 self.assign_attr(ins, name, value)
         ins.save()
 
-    def assign_attr(ins, name, value):
+    def assign_attr(self, ins, name, value):
         if hasattr(ins, name):
             ty = type(getattr(ins, name))
             value = ty(value)
