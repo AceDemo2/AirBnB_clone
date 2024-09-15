@@ -116,7 +116,7 @@ class HBNBCommand(cmd.Cmd):
             func = args[1].replace("(", "").replace(")", "")
             if 'update' in func:
                 sfunc = func.replace(',', '').split('"', 1).replace('"', '')
-                name = f'{args[0]} {sfunc[1]}' if len(sfunc) > 1 else return
+                name = f'{args[0]} {sfunc[1]}'
                 func = sfunc[0]
                 """sfunc = func.split(',', 2)
                 if len(sfunc) == 3:
