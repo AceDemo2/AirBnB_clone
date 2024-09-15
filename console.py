@@ -115,7 +115,10 @@ class HBNBCommand(cmd.Cmd):
                     'update': self.do_update}
             func = args[1].replace("(", "").replace(")", "")
             if 'update' in func:
-                sfunc = func.split(',', 2)
+                sfunc = func.replace(',', '').split('"', 1).replace('"', '')
+                name = f'{args[0]} {sfunc[1]}' if len(sfunc) > 1 else return
+                func = sfunc[0]
+                """sfunc = func.split(',', 2)
                 if len(sfunc) == 3:
                     funcid = sfunc[0].split('"')
                     oid = funcid[0].strip()
@@ -124,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
                     name = f'{args[0]} {oid} {aname} {avalue}'
                     func = 'update'
                 else:
-                    return
+                    return"""
             elif 'show' in func or 'destroy' in func:
                 sfunc = func.split('"')
                 name = f'{args[0]} {sfunc[1]}' if len(sfunc) > 1 and sfunc[1] else f'{args[0]}'
