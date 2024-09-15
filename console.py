@@ -138,7 +138,8 @@ class HBNBCommand(cmd.Cmd):
                 return
             if not dic:
                 funcs[func](name)
-            else funcs[func](name, dic) 
+            else:
+                funcs[func](name, dic) 
 
     def do_update(self, arg, dic=False):
         """updates an instance"""
