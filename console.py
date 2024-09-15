@@ -115,8 +115,8 @@ class HBNBCommand(cmd.Cmd):
                     'destroy': self.do_destroy,
                     'update': self.do_update}
             func = args[1].replace("(", "").replace(")", "")
+            dic = False
             if 'update' in func or 'show' in func or 'destroy' in func:
-                dic = False
                 if 'update' in func:
                     if '{' in func:
                         sfunc = func.split('"', 1)
