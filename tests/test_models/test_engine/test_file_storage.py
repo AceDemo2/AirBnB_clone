@@ -41,7 +41,9 @@ class TestFileStorage(unittest.TestCase):
     
     def test_save(self):
         """check save method"""
-        self.assertTrue(os.path.isfile(self._file_path))
+        oldtime = self.ins.updated_at
+        self.ins.save()
+        self.assertNotEqual(self.ins.updated_at, oldtime)
 
     def test_new(self):
         """check new method"""
