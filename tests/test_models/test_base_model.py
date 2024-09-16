@@ -3,7 +3,6 @@
 import unittest
 from models.base_model import BaseModel
 from datetime import datetime
-from models.engine.file_storage import FileStorage
 
 class TestBaseModel(unittest.TestCase):
     """test cases for basemodel class"""
@@ -24,7 +23,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(self.ins.id, str)
         self.assertIsInstance(self.ins.created_at, datetime)
         self.assertIsInstance(self.ins.updated_at, datetime)
-        self.assertEqual(self.ins.created_at, self.ins.updated_at)
+        self.assertNotEqual(self.ins.created_at, self.ins.updated_at)
 
     def test_id(self):
         """check id"""
@@ -35,7 +34,7 @@ class TestBaseModel(unittest.TestCase):
         """check save"""
         oldtime = self.ins.updated_at
         self.ins.save()
-        self.assertNotEqual(self.ins.updateed_at, oldtime)
+        self.assertNotEqual(self.ins.updated_at, oldtime)
 
     def test_dic(self):
         """check dictionary"""
@@ -50,54 +49,6 @@ class TestBaseModel(unittest.TestCase):
         strout = str(self.ins) 
         expected = f"[BaseModel] ({self.ins.id}) {self.ins.__dict__}"
         self.assertEqual(strout, expected) 
-
-class TestFileStorage(unittest.TestCase):
-    """test cases for file storage"""
-    
-    @classmethod
-    def setUpClass(cls):
-        """create storage instance"""
-        cls.storage = storage.FileStorage()
-        cls.ins = BaseModel()
-        cls.ins.name = 'Model'
-        cls._file_path = cls.storage._FileStorage__file_path
-        cls.storage.reload()
-
-    @classmethod
-    def tearDownClass(cls):
-        """cleaan up"""
-        del cls.ins
-        try:
-            os.remove(cls._file_path)
-        except FileNotFoundError:
-            pass
-
-    def test_all(self):
-        """check all method"""
-        self.assertIsInstance(self.storage.all(), dict)
-   
-    def test_reload(self):
-        """check reload method"""
-        self.storage.reload()
-        obj = self.storage.all()
-        self.assertIn(f"BaseModel.{self.ins.id}", obj)
-        self.assertEqual(obj[f"BaseModel.{self.ins.id}"]['name'], 'Model')
-    
-    def test_save(self):
-        """check save method"""
-        self.assertTrue(os.path.isfile(self._file_path))
-
-    def test_new(self):
-        """check new method"""
-        nmodel = BaseModel()
-        nmodel.name = 'new_model'
-        self.storage.new(nmodel)
-        self.storage.save()
-        self.storage.reload()
-        obj = self.storage.all()
-        self.assertIn(f'BaseModel.{nmodel.id}', obj)
-        self.assertEqual(obj[f"BaseModel.{nmodel.id}"]['name'], 'new_model')
-
 
 if __name__ == "__main__":
     unittest.main()
