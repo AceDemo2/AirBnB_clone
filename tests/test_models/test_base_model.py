@@ -1,8 +1,8 @@
-#!/usr/bin/bash/python3
+#!/usr/bin/python3
 """tests"""
 import unittest
 from models.base_model import BaseModel
-import datetime import datetime
+from datetime import datetime
 from models.engine.file_storage import FileStorage
 
 class TestBaseModel(unittest.TestCase):
@@ -35,7 +35,7 @@ class TestBaseModel(unittest.TestCase):
         """check save"""
         oldtime = self.ins.updated_at
         self.ins.save()
-        self.assertNotEqual(self.ins.update_at, oldtime)
+        self.assertNotEqual(self.ins.updateed_at, oldtime)
 
     def test_dic(self):
         """check dictionary"""
@@ -43,15 +43,15 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(dic['updated_at'], self.ins.updated_at.isoformat())
         self.assertEqual(dic['created_at'], self.ins.created_at.isoformat())
         self.assertEqual(dic['id'], self.ins.id)
-        self.assertEqual(dic['__class__'], self.ins.__name__)
+        self.assertEqual(dic['__class__'], self.ins.__class__.__name__)
     
     def test_str(self):
         """check str output"""
         strout = str(self.ins) 
-        expected = f"[BaseModel] ({self.model.id}) {self.model.__dict__}"
+        expected = f"[BaseModel] ({self.ins.id}) {self.ins.__dict__}"
         self.assertEqual(strout, expected) 
 
-class TestFileStorage:
+class TestFileStorage(unittest.TestCase):
     """test cases for file storage"""
     
     @classmethod
@@ -68,7 +68,7 @@ class TestFileStorage:
         """cleaan up"""
         del cls.ins
         try:
-            os.remove(cls.file_path)
+            os.remove(cls._file_path)
         except FileNotFoundError:
             pass
 
@@ -95,7 +95,7 @@ class TestFileStorage:
         self.storage.save()
         self.storage.reload()
         obj = self.storage.all()
-        self.assertIn(f'{BaseModel}.{nmodel.id}', obj)
+        self.assertIn(f'BaseModel.{nmodel.id}', obj)
         self.assertEqual(obj[f"BaseModel.{nmodel.id}"]['name'], 'new_model')
 
 
