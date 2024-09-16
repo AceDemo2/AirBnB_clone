@@ -34,6 +34,8 @@ class TestFileStorage(unittest.TestCase):
    
     def test_reload(self):
         """check reload method"""
+        self.storage.new(self.ins)
+        self.storage.save()
         self.storage.reload()
         obj = self.storage.all()
         self.assertIn(f"BaseModel.{self.ins.id}", obj)
