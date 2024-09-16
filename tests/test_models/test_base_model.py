@@ -3,13 +3,20 @@
 import unittest
 from models.base_model import BaseModel
 import datetime import datetime
-
+from models.engine.file_storage import FileStorage
 
 class TestBaseModel(unittest.TestCase):
     """test cases for basemodel class"""
-    def setUp(self):
+    
+    @classmethod
+    def setUpClass(cls):
         """create instance"""
-        self.ins = BaseModel()
+        cls.ins = BaseModel()
+
+    @classmethod
+    def tearDownClass(cls):
+        """cleaan up"""
+        del cls.ins
 
     def test_instancecreation(self):
         """test case for instance creation"""
@@ -27,7 +34,7 @@ class TestBaseModel(unittest.TestCase):
     def test_save(self):
         """check save"""
         oldtime = self.ins.updated_at
-        self.save()
+        self.ins.save()
         self.assertNotEqual(self.ins.update_at, oldtime)
 
     def test_dic(self):
@@ -44,8 +51,53 @@ class TestBaseModel(unittest.TestCase):
         expected = f"[BaseModel] ({self.model.id}) {self.model.__dict__}"
         self.assertEqual(strout, expected) 
 
+class TestFileStorage:
+    """test cases for file storage"""
+    
+    @classmethod
+    def setUpClass(cls):
+        """create storage instance"""
+        cls.storage = storage.FileStorage()
+        cls.ins = BaseModel()
+        cls.ins.name = 'Model'
+        cls._file_path = cls.storage._FileStorage__file_path
+        cls.storage.reload()
+
+    @classmethod
+    def tearDownClass(cls):
+        """cleaan up"""
+        del cls.ins
+        try:
+            os.remove(cls.file_path)
+        except FileNotFoundError:
+            pass
+
     def test_all(self):
         """check all method"""
+        self.assertIsInstance(self.storage.all(), dict)
+   
+    def test_reload(self):
+        """check reload method"""
+        self.storage.reload()
+        obj = self.storage.all()
+        self.assertIn(f"BaseModel.{self.ins.id}", obj)
+        self.assertEqual(obj[f"BaseModel.{self.ins.id}"]['name'], 'Model')
+    
+    def test_save(self):
+        """check save method"""
+        self.assertTrue(os.path.isfile(self._file_path))
+
+    def test_new(self):
+        """check new method"""
+        nmodel = BaseModel()
+        nmodel.name = 'new_model'
+        self.storage.new(nmodel)
+        self.storage.save()
+        self.storage.reload()
+        obj = self.storage.all()
+        self.assertIn(f'{BaseModel}.{nmodel.id}', obj)
+        self.assertEqual(obj[f"BaseModel.{nmodel.id}"]['name'], 'new_model')
+
 
 if __name__ == "__main__":
     unittest.main()
