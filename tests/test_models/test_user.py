@@ -30,10 +30,10 @@ class TestUser(unittest.TestCase):
         self.assertIsInstance(self.ins.created_at, datetime)
         self.assertIsInstance(self.ins.updated_at, datetime)
         self.assertNotEqual(self.ins.created_at, self.ins.updated_at)
-        self.assertEqual(self.user1.email, "test1@mail.com")
-        self.assertEqual(self.user1.password, "password1")
-        self.assertEqual(self.user1.first_name, "John")
-        self.assertEqual(self.user1.last_name, "Doe")
+        self.assertEqual(self.ins.email, "test1@mail.com")
+        self.assertEqual(self.ins.password, "password1")
+        self.assertEqual(self.ins.first_name, "John")
+        self.assertEqual(self.ins.last_name, "Doe")
     
     def test_id(self):
         """check id"""
